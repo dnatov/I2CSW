@@ -3,7 +3,7 @@ project(I2CSW C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_library(${PROJECT_NAME} I2CSW.c I2CSW.h)
+add_library(${PROJECT_NAME} i2csw.c i2csw.h)
 
 target_link_libraries(${PROJECT_NAME})
 
