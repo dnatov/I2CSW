@@ -42,7 +42,7 @@ unsigned char I2C_master_read_bit (struct I2C_BitBang_Interface_t* instance)
     I2C_SET_SCL
     I2C_DELAY
 
-    if( I2C_GET_SDA ) b = 1;
+    if( !I2C_GET_SDA ) b = 1;
     else b = 0;
 
     I2C_CLR_SCL
