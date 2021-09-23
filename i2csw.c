@@ -42,7 +42,7 @@ unsigned char I2C_master_read_bit (struct I2C_BitBang_Interface_t* instance)
     I2C_SET_SCL
     I2C_DELAY
 
-    if( !I2C_GET_SDA ) b = 1;
+    if( I2C_GET_SDA ) b = 1;
     else b = 0;
 
     I2C_CLR_SCL
@@ -95,7 +95,7 @@ bool i2c_write_byte(struct I2C_BitBang_Interface_t* instance, uint8_t B, bool st
         B <<= 1;
     }
 
-    ack = I2C_master_read_bit(instance);
+    ack = !I2C_master_read_bit(instance);
 
     if( stop ) I2C_Stop_condition(instance);
 
@@ -110,8 +110,8 @@ uint8_t i2c_read_byte(struct I2C_BitBang_Interface_t* instance, bool ack, bool s
     uint8_t i;
     for( i = 0; i < 8; i++ )
     {
-        B >>= 1;
-        B = I2C_master_read_bit(instance) ? (B | 0x80) : (B & 0x7F);
+        B <<= 1;
+        B = I2C_master_read_bit(instance) ? (B | 0x01) : (B & 0x7E);
     }
 
     if( ack ) I2C_master_write_bit(instance, 0);
